@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>StyleCam</title>
+    <meta
+      name="description"
+      content="StyleCam is a camera helper app for recreating composition with reference overlays."
+    />
+    <style>
+      :root {
+        --bg: #f7f8fc;
+        --card: #ffffff;
+        --text: #172033;
+        --muted: #5c6477;
+        --line: #dbe0ec;
+        --accent: #2b66f6;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+          sans-serif;
+        color: var(--text);
+        background: radial-gradient(circle at 10% 10%, #eef3ff 0%, var(--bg) 60%);
+      }
+
+      .wrap {
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 48px 20px;
+      }
+
+      .card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 28px;
+      }
+
+      h1 {
+        margin: 0 0 12px;
+        font-size: 32px;
+        line-height: 1.2;
+      }
+
+      p {
+        margin: 12px 0;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 18px;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 10px 14px;
+        border-radius: 10px;
+        text-decoration: none;
+        color: #fff;
+        background: var(--accent);
+        font-weight: 600;
+      }
+
+      .note {
+        margin-top: 16px;
+        padding: 12px;
+        border-radius: 10px;
+        border: 1px dashed var(--line);
+        font-size: 14px;
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <main class="wrap">
+      <section class="card">
+        <h1>StyleCam</h1>
+        <p>
+          StyleCam is a camera helper app that lets users overlay a reference image and shoot with
+          matching composition and angle.
+        </p>
+        <p>
+          This page is used as the marketing URL for the App Store listing and AdMob app-ads.txt
+          domain verification.
+        </p>
+
+        <div class="links">
+          <a class="btn" href="https://sites.google.com/view/reco-app-privacy-policy/%E3%83%9B%E3%83%BC%E3%83%A0"
+            >Privacy Policy</a
+          >
+          <a class="btn" href="https://forms.gle/i6nbR2GQYp26hCJD7">Support</a>
+        </div>
+
+        <p class="note">
+          After publishing this repository with GitHub Pages, set the marketing URL in App Store
+          Connect to this site root URL.
+        </p>
+      </section>
+    </main>
+  </body>
+</html>
