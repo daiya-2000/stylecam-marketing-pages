@@ -3,110 +3,817 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>StyleCam</title>
+    <title>StyleCam | 好きな写真と同じ構図で、撮れる。</title>
     <meta
       name="description"
-      content="StyleCam is a camera helper app for recreating composition with reference overlays."
+      content="StyleCamは参考画像を重ねて撮れるiPhone専用カメラアプリ。SNSで見た理想の写真を、誰でも簡単に再現できます。"
     />
+    <meta property="og:title" content="StyleCam | 好きな写真と同じ構図で、撮れる。" />
+    <meta
+      property="og:description"
+      content="参考画像を重ねるだけで、理想の構図に近づける。StyleCamはiPhone専用・無料です。"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="img/StyleCam_icon.png" />
     <style>
+      @import url("https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap");
+
       :root {
-        --bg: #f7f8fc;
+        --bg: #fdf8f5;
+        --ink: #2d1f2e;
+        --soft: #9a7fa0;
+        --line: #f0dfe8;
         --card: #ffffff;
-        --text: #172033;
-        --muted: #5c6477;
-        --line: #dbe0ec;
-        --accent: #2b66f6;
+        --grad-a: #f4789a;
+        --grad-b: #c77dbc;
       }
 
-      * {
-        box-sizing: border-box;
-      }
+      * { box-sizing: border-box; }
+
+      html, body { margin: 0; padding: 0; }
 
       body {
-        margin: 0;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
-          sans-serif;
-        color: var(--text);
-        background: radial-gradient(circle at 10% 10%, #eef3ff 0%, var(--bg) 60%);
+        font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+        color: var(--ink);
+        background: var(--bg);
+        line-height: 1.75;
       }
 
-      .wrap {
-        max-width: 760px;
+      img { display: block; width: 100%; height: auto; }
+
+      .page { position: relative; overflow: hidden; }
+
+      .orb {
+        position: absolute;
+        border-radius: 999px;
+        filter: blur(80px);
+        opacity: 0.5;
+        pointer-events: none;
+      }
+
+      .orb-a {
+        width: 440px; height: 440px;
+        top: -140px; left: -180px;
+        background: radial-gradient(circle, #f9c4d4 0%, #e8b8ea 60%, transparent 100%);
+      }
+
+      .orb-b {
+        width: 520px; height: 520px;
+        right: -240px; bottom: 80px;
+        background: radial-gradient(circle, #f9c4d4 0%, #d8b8ec 60%, transparent 100%);
+      }
+
+      .container {
+        width: min(1140px, 100% - 32px);
         margin: 0 auto;
-        padding: 48px 20px;
       }
 
-      .card {
-        background: var(--card);
-        border: 1px solid var(--line);
-        border-radius: 16px;
-        padding: 28px;
+      .section {
+        position: relative;
+        z-index: 2;
+        padding: 64px 0;
       }
 
-      h1 {
-        margin: 0 0 12px;
-        font-size: 32px;
-        line-height: 1.2;
+      /* ─── LABELS ─── */
+      .eyebrow {
+        margin: 0;
+        font-size: 12px;
+        letter-spacing: 0.14em;
+        font-weight: 700;
+        color: var(--grad-a);
+        text-transform: uppercase;
       }
 
-      p {
-        margin: 12px 0;
-        color: var(--muted);
-        line-height: 1.7;
+      .eyebrow-center { text-align: center; }
+
+      .grad-text {
+        background: linear-gradient(90deg, var(--grad-a), var(--grad-b));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
       }
 
-      .links {
+      .section-title {
+        margin: 8px 0 32px;
+        font-family: "M PLUS Rounded 1c", "Noto Sans JP", sans-serif;
+        font-size: clamp(26px, 6vw, 46px);
+        line-height: 1.3;
+      }
+
+      .section-title-center { text-align: center; }
+
+      /* ─── CTA BUTTONS ─── */
+      .cta-group {
         display: flex;
         flex-wrap: wrap;
         gap: 12px;
-        margin-top: 18px;
+        margin-top: 24px;
       }
 
-      .btn {
-        display: inline-block;
-        padding: 10px 14px;
-        border-radius: 10px;
+      .cta-primary, .cta-secondary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 14px 24px;
+        border-radius: 14px;
         text-decoration: none;
-        color: #fff;
-        background: var(--accent);
-        font-weight: 600;
+        font-weight: 700;
+        font-size: 15px;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
       }
 
-      .note {
-        margin-top: 16px;
-        padding: 12px;
-        border-radius: 10px;
-        border: 1px dashed var(--line);
+      .cta-primary {
+        background: linear-gradient(135deg, var(--grad-a), var(--grad-b));
+        color: #fff;
+        box-shadow: 0 6px 20px rgba(244, 120, 154, 0.35);
+      }
+
+      .cta-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 28px rgba(244, 120, 154, 0.48);
+      }
+
+      .cta-secondary {
+        background: #fff;
+        color: var(--ink);
+        border: 1.5px solid var(--line);
+      }
+
+      .cta-secondary:hover {
+        transform: translateY(-1px);
+        border-color: var(--grad-a);
+      }
+
+      /* ─── HERO ─── */
+      .hero { padding-top: 20px; }
+
+      .hero-grid {
+        display: grid;
+        gap: 36px;
+        align-items: center;
+      }
+
+      .hero-title {
+        margin: 12px 0 0;
+        font-family: "M PLUS Rounded 1c", "Noto Sans JP", sans-serif;
+        font-size: clamp(32px, 7vw, 56px);
+        line-height: 1.1;
+        letter-spacing: 0.01em;
+      }
+
+      .hero-copy > p {
+        margin: 16px 0 0;
+        color: var(--soft);
+        font-size: 15px;
+        line-height: 1.85;
+      }
+
+      .ios-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 20px;
+        padding: 7px 16px;
+        border-radius: 999px;
+        border: 1.5px solid var(--line);
+        background: #fff;
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--soft);
+        letter-spacing: 0.05em;
+      }
+
+      .hero-visual {
+        max-width: 320px;
+        margin: 0 auto;
+      }
+
+      .hero-visual img {
+        border-radius: 28px;
+        box-shadow: 0 32px 80px rgba(180, 100, 160, 0.2);
+      }
+
+      /* ─── PROBLEM ─── */
+      .problem-grid {
+        display: grid;
+        gap: 14px;
+      }
+
+      .problem-card {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        background: #fff;
+        border: 1.5px solid var(--line);
+        border-radius: 22px;
+        padding: 26px 24px;
+      }
+
+      .problem-num {
+        font-family: "M PLUS Rounded 1c", sans-serif;
+        font-size: 38px;
+        font-weight: 800;
+        line-height: 1;
+        background: linear-gradient(135deg, var(--grad-a), var(--grad-b));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .problem-card h3 {
+        margin: 0;
+        font-size: clamp(18px, 4vw, 22px);
+        font-weight: 700;
+        line-height: 1.4;
+      }
+
+      .problem-card p {
+        margin: 0;
+        color: var(--soft);
         font-size: 14px;
-        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      /* ─── HOW IT WORKS ─── */
+      .howto-section-inner {
+        display: grid;
+        gap: 36px;
+        align-items: center;
+      }
+
+      .howto-app-visual {
+        max-width: 300px;
+        margin: 0 auto;
+      }
+
+      .howto-app-visual img {
+        border-radius: 28px;
+        box-shadow: 0 28px 72px rgba(180, 100, 160, 0.18);
+      }
+
+      .steps-list {
+        display: grid;
+        gap: 18px;
+      }
+
+      .step-card {
+        display: grid;
+        grid-template-columns: 52px 1fr;
+        gap: 16px;
+        align-items: flex-start;
+        background: #fff;
+        border: 1.5px solid var(--line);
+        border-radius: 20px;
+        padding: 20px;
+      }
+
+      .step-num {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 52px;
+        height: 52px;
+        border-radius: 15px;
+        background: linear-gradient(135deg, var(--grad-a), var(--grad-b));
+        color: #fff;
+        font-family: "M PLUS Rounded 1c", sans-serif;
+        font-weight: 800;
+        font-size: 22px;
+        flex-shrink: 0;
+        box-shadow: 0 4px 14px rgba(244, 120, 154, 0.3);
+      }
+
+      .step-card h3 {
+        margin: 4px 0 6px;
+        font-size: 17px;
+        font-weight: 700;
+      }
+
+      .step-card p {
+        margin: 0;
+        color: var(--soft);
+        font-size: 14px;
+        line-height: 1.75;
+      }
+
+      /* ─── FEATURES ─── */
+      .features-bg {
+        background: linear-gradient(180deg, #fff5f8 0%, var(--bg) 100%);
+      }
+
+      .features-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+
+      .feature-card {
+        background: #fff;
+        border: 1.5px solid var(--line);
+        border-radius: 20px;
+        padding: 22px 18px 20px;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(180, 100, 160, 0.1);
+      }
+
+      .feature-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 15px;
+        background: linear-gradient(135deg, #fde8ef, #f2dff5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 14px;
+      }
+
+      .feature-icon svg { width: 28px; height: 28px; }
+
+      .feature-card h3 {
+        margin: 0 0 6px;
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 1.4;
+      }
+
+      .feature-card p {
+        margin: 0;
+        color: var(--soft);
+        font-size: 12px;
+        line-height: 1.75;
+      }
+
+      /* ─── SCENES ─── */
+      .scenes-grid {
+        display: grid;
+        gap: 16px;
+      }
+
+      .scene-card {
+        border-radius: 22px;
+        background: #fff;
+        border: 1.5px solid var(--line);
+        overflow: hidden;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .scene-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 16px 48px rgba(180, 100, 160, 0.14);
+      }
+
+      .scene-media { position: relative; }
+
+      .scene-media img {
+        aspect-ratio: 4 / 5;
+        object-fit: cover;
+        width: 100%;
+      }
+
+      .scene-label {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        padding: 5px 14px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(4px);
+        font-weight: 700;
+        font-size: 13px;
+        color: var(--ink);
+      }
+
+      .scene-body {
+        padding: 16px 18px 20px;
+      }
+
+      .scene-body h3 {
+        margin: 0 0 6px;
+        font-size: 16px;
+        font-weight: 700;
+      }
+
+      .scene-body p {
+        margin: 0;
+        color: var(--soft);
+        font-size: 13px;
+        line-height: 1.75;
+      }
+
+      /* ─── CTA BOX ─── */
+      .cta-box {
+        background: #fff;
+        border: 1.5px solid var(--line);
+        border-radius: 28px;
+        padding: 32px 24px;
+        display: grid;
+        gap: 28px;
+        align-items: center;
+      }
+
+      .cta-box h2 {
+        margin: 8px 0 0;
+        font-family: "M PLUS Rounded 1c", "Noto Sans JP", sans-serif;
+        font-size: clamp(28px, 6vw, 50px);
+        line-height: 1.3;
+      }
+
+      .cta-box .sub {
+        margin: 12px 0 0;
+        color: var(--soft);
+        font-size: 14px;
+        line-height: 1.8;
+      }
+
+      .app-icon {
+        max-width: 180px;
+        margin-inline: auto;
+      }
+
+      .app-icon img {
+        border-radius: 32px;
+        box-shadow: 0 16px 48px rgba(180, 100, 160, 0.22);
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+      }
+
+      /* ─── FOOTER ─── */
+      .footer { padding: 24px 0 44px; }
+
+      .footer-card {
+        border-radius: 18px;
+        padding: 18px;
+        border: 1.5px solid var(--line);
+        background: #fff;
+      }
+
+      .footer-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 12px;
+      }
+
+      .footer-links a {
+        display: inline-flex;
+        text-decoration: none;
+        color: var(--ink);
+        border: 1.5px solid var(--line);
+        border-radius: 999px;
+        padding: 7px 14px;
+        font-size: 13px;
+        font-weight: 700;
+        background: #fff;
+        transition: border-color 0.2s, color 0.2s;
+      }
+
+      .footer-links a:hover {
+        border-color: var(--grad-a);
+        color: var(--grad-a);
+      }
+
+      .small {
+        margin: 0;
+        color: var(--soft);
+        font-size: 13px;
+      }
+
+      /* ─── RESPONSIVE ─── */
+      @media (min-width: 760px) {
+        .section { padding: 96px 0; }
+
+        .hero-grid {
+          grid-template-columns: 1.2fr 0.8fr;
+          gap: 60px;
+        }
+
+        .hero-visual { max-width: 100%; }
+
+        .problem-grid { grid-template-columns: repeat(3, 1fr); }
+
+        .howto-section-inner {
+          grid-template-columns: 0.75fr 1.25fr;
+          gap: 56px;
+        }
+
+        .howto-app-visual { max-width: 100%; }
+
+        .features-grid {
+          grid-template-columns: repeat(4, 1fr);
+          gap: 20px;
+        }
+
+        .feature-card h3 { font-size: 15px; }
+        .feature-card p  { font-size: 13px; }
+
+        .scenes-grid { grid-template-columns: repeat(3, 1fr); }
+
+        .cta-box {
+          grid-template-columns: 1fr auto;
+          padding: 52px;
+          gap: 48px;
+        }
+
+        .app-icon { max-width: 200px; }
       }
     </style>
   </head>
   <body>
-    <main class="wrap">
-      <section class="card">
-        <h1>StyleCam</h1>
-        <p>
-          StyleCam is a camera helper app that lets users overlay a reference image and shoot with
-          matching composition and angle.
-        </p>
-        <p>
-          This page is used as the marketing URL for the App Store listing and AdMob app-ads.txt
-          domain verification.
-        </p>
+    <div class="page">
+      <span class="orb orb-a" aria-hidden="true"></span>
+      <span class="orb orb-b" aria-hidden="true"></span>
 
-        <div class="links">
-          <a class="btn" href="https://sites.google.com/view/reco-app-privacy-policy/%E3%83%9B%E3%83%BC%E3%83%A0"
-            >Privacy Policy</a
-          >
-          <a class="btn" href="https://forms.gle/i6nbR2GQYp26hCJD7">Support</a>
+      <main>
+
+        <!-- ① HERO -->
+        <section class="section hero">
+          <div class="container hero-grid">
+            <div class="hero-copy">
+              <p class="eyebrow">iPhone専用カメラアプリ</p>
+              <h1 class="hero-title">
+                <span class="grad-text">好きな写真と</span><br />
+                <span class="grad-text">同じ構図で、撮れる。</span>
+              </h1>
+              <p>
+                InstagramやTikTokで見つけた理想の写真を、誰でも簡単に再現。<br />
+                参考画像をカメラ画面に半透明で重ねるだけで、<br />
+                構図・顔の位置・カメラ角度をぴったり合わせられます。
+              </p>
+              <span class="ios-badge">iOS ONLY ・ iPhoneで無料ダウンロード</span>
+              <div class="cta-group">
+                <a
+                  class="cta-primary"
+                  href="https://apps.apple.com/jp/app/stylecam/id6774717129"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >App Storeでダウンロード</a
+                >
+                <a class="cta-secondary" href="#how">使い方を見る</a>
+              </div>
+            </div>
+            <div class="hero-visual">
+              <img
+                src="img/アプリ参考画像.png"
+                alt="StyleCamの撮影画面 — 参考画像を重ねながら構図を合わせている"
+                loading="eager"
+                decoding="async"
+              />
+            </div>
+          </div>
+        </section>
+
+        <!-- ② PROBLEM -->
+        <section class="section">
+          <div class="container">
+            <p class="eyebrow eyebrow-center">PROBLEM</p>
+            <h2 class="section-title section-title-center">
+              SNSで見た写真、<br />
+              <span class="grad-text">こんな悩みありませんか？</span>
+            </h2>
+            <div class="problem-grid">
+              <div class="problem-card">
+                <span class="problem-num">01</span>
+                <h3>何枚撮っても<br />イメージと違う</h3>
+                <p>角度や距離感が少しズレるだけで、雰囲気がまるで変わってしまう。</p>
+              </div>
+              <div class="problem-card">
+                <span class="problem-num">02</span>
+                <h3>同じ場所なのに<br />雰囲気が全然違う</h3>
+                <p>構図のコツがわからず、どこから撮ればいいか毎回迷ってしまう。</p>
+              </div>
+              <div class="problem-card">
+                <span class="problem-num">03</span>
+                <h3>真似したい構図が<br />うまく作れない</h3>
+                <p>参考にしたい写真があっても、実際に撮ろうとすると全然再現できない。</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ③ HOW IT WORKS -->
+        <section class="section" id="how">
+          <div class="container">
+            <p class="eyebrow">HOW IT WORKS</p>
+            <h2 class="section-title">
+              <span class="grad-text">参考画像を重ねるだけ。</span><br />
+              たった3ステップで理想の1枚へ
+            </h2>
+            <div class="howto-section-inner">
+              <div class="howto-app-visual">
+                <img
+                  src="img/アプリ参考画像.png"
+                  alt="StyleCamの撮影画面 — グリッドと参考画像を重ねて構図を合わせている"
+                  loading="lazy"
+                />
+              </div>
+              <div class="steps-list">
+                <div class="step-card">
+                  <div class="step-num">1</div>
+                  <div>
+                    <h3>参考画像を選ぶ</h3>
+                    <p>カメラロールからSNSのスクリーンショットなど、再現したい画像をタップするだけ。アルバムからすぐに選べます。</p>
+                  </div>
+                </div>
+                <div class="step-card">
+                  <div class="step-num">2</div>
+                  <div>
+                    <h3>重ねて構図を合わせる</h3>
+                    <p>選んだ画像がカメラ画面に半透明で重なります。体の位置・カメラ角度・距離感を参考画像に合わせるだけ。透明度やサイズも自在に調整できます。</p>
+                  </div>
+                </div>
+                <div class="step-card">
+                  <div class="step-num">3</div>
+                  <div>
+                    <h3>シャッターを押して完成</h3>
+                    <p>ピタッと構図が決まったらシャッターを押すだけ。理想の1枚のできあがり！</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ④ FEATURES -->
+        <section class="section features-bg">
+          <div class="container">
+            <p class="eyebrow eyebrow-center">FEATURES</p>
+            <h2 class="section-title section-title-center">
+              <span class="grad-text">撮りたいを叶える</span>、充実の機能
+            </h2>
+            <div class="features-grid">
+
+              <div class="feature-card">
+                <div class="feature-icon">
+                  <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="2" y="7" width="16" height="16" rx="3.5" stroke="#f4789a" stroke-width="2"/>
+                    <rect x="9" y="3" width="16" height="16" rx="3.5" fill="#fde8ef" stroke="#c77dbc" stroke-width="2"/>
+                    <path d="M17 9 L17 15" stroke="#c77dbc" stroke-width="1.8" stroke-linecap="round"/>
+                    <path d="M14 12 L20 12" stroke="#c77dbc" stroke-width="1.8" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <h3>参考画像<br />オーバーレイ</h3>
+                <p>カメラ画面に参考画像を半透明で重ねて表示。透明度・サイズ・位置を自由に調整できます。</p>
+              </div>
+
+              <div class="feature-card">
+                <div class="feature-icon">
+                  <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="2" y="2" width="24" height="24" rx="4" stroke="#f4789a" stroke-width="2"/>
+                    <line x1="10" y1="2" x2="10" y2="26" stroke="#f4789a" stroke-width="1.5"/>
+                    <line x1="18" y1="2" x2="18" y2="26" stroke="#f4789a" stroke-width="1.5"/>
+                    <line x1="2" y1="10" x2="26" y2="10" stroke="#f4789a" stroke-width="1.5"/>
+                    <line x1="2" y1="18" x2="26" y2="18" stroke="#f4789a" stroke-width="1.5"/>
+                  </svg>
+                </div>
+                <h3>グリッド表示</h3>
+                <p>3分割グリッドをON/OFFで切り替え。構図をより正確に合わせるためのガイドラインです。</p>
+              </div>
+
+              <div class="feature-card">
+                <div class="feature-icon">
+                  <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M14 3 L15.8 11.2 L24 13 L15.8 14.8 L14 23 L12.2 14.8 L4 13 L12.2 11.2 Z" stroke="#f4789a" stroke-width="2" stroke-linejoin="round"/>
+                    <circle cx="22" cy="5" r="1.8" fill="#c77dbc" opacity="0.7"/>
+                    <circle cx="6" cy="22" r="1.3" fill="#f4789a" opacity="0.6"/>
+                  </svg>
+                </div>
+                <h3>美肌加工<br /><span style="font-weight:400;font-size:11px;color:var(--soft);">v1.1.0</span></h3>
+                <p>リアルタイム美肌フィルターで撮影しながらいつでもきれいに。強度もスライダーで調整できます。</p>
+              </div>
+
+              <div class="feature-card">
+                <div class="feature-icon">
+                  <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="2" y="8" width="24" height="16" rx="3.5" stroke="#f4789a" stroke-width="2"/>
+                    <circle cx="14" cy="16" r="4.5" stroke="#f4789a" stroke-width="1.8"/>
+                    <rect x="10" y="4" width="8" height="4.5" rx="2.2" stroke="#f4789a" stroke-width="1.6"/>
+                    <circle cx="22" cy="11" r="1.8" fill="#c77dbc"/>
+                  </svg>
+                </div>
+                <h3>充実のカメラ操作</h3>
+                <p>ピンチでズーム・フラッシュ切替・タイマー撮影（3秒・5秒）・前面カメラ切替に対応。</p>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        <!-- ⑤ SCENES -->
+        <section class="section" id="scenes">
+          <div class="container">
+            <p class="eyebrow eyebrow-center">SCENES</p>
+            <h2 class="section-title section-title-center">
+              <span class="grad-text">旅行・カフェ・カップル写真</span><br />
+              いろんなシーンで使える
+            </h2>
+            <div class="scenes-grid">
+
+              <article class="scene-card">
+                <div class="scene-media">
+                  <img
+                    src="img/旅行1.png"
+                    alt="旅行先の街並みを歩く女性"
+                    loading="lazy"
+                  />
+                  <span class="scene-label">旅行</span>
+                </div>
+                <div class="scene-body">
+                  <h3>旅先でも迷わず撮れる</h3>
+                  <p>景色と人物のバランスを参考画像に合わせるだけ。見上げるアングルや奥行きのある構図も簡単に再現できます。</p>
+                </div>
+              </article>
+
+              <article class="scene-card">
+                <div class="scene-media">
+                  <img
+                    src="img/旅行2.png"
+                    alt="カフェテラスで写真を撮る女性"
+                    loading="lazy"
+                  />
+                  <span class="scene-label">カフェ</span>
+                </div>
+                <div class="scene-body">
+                  <h3>テーブルフォトも思い通りに</h3>
+                  <p>手元の角度やカメラの高さを合わせて、おしゃれなカフェ写真を再現。インスタ映えする構図がすぐ作れます。</p>
+                </div>
+              </article>
+
+              <article class="scene-card">
+                <div class="scene-media">
+                  <img
+                    src="img/旅行3.png"
+                    alt="石畳の路地を歩くカップル"
+                    loading="lazy"
+                  />
+                  <span class="scene-label">カップル</span>
+                </div>
+                <div class="scene-body">
+                  <h3>2人の距離感・立ち位置も合わせられる</h3>
+                  <p>後ろ姿ショットや手をつなぐ構図も、参考画像に重ねてぴったり再現。自然でまとまりある記念写真に。</p>
+                </div>
+              </article>
+
+            </div>
+          </div>
+        </section>
+
+        <!-- ⑥ CTA -->
+        <section class="section">
+          <div class="container cta-box">
+            <div>
+              <p class="eyebrow">FREE DOWNLOAD</p>
+              <h2>
+                <span class="grad-text">理想の1枚を、</span><br />
+                <span class="grad-text">もっと近くに。</span>
+              </h2>
+              <p class="sub">
+                StyleCamはiOS専用・無料でダウンロードできます。<br />
+                撮る前に構図を合わせる新しい体験を、今すぐ始めよう。
+              </p>
+              <div class="cta-group">
+                <a
+                  class="cta-primary"
+                  href="https://apps.apple.com/jp/app/stylecam/id6774717129"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >App Storeでダウンロード</a
+                >
+              </div>
+            </div>
+            <div class="app-icon">
+              <img src="img/StyleCam_icon.png" alt="StyleCamのアプリアイコン" loading="lazy" />
+            </div>
+          </div>
+        </section>
+
+      </main>
+
+      <footer class="footer">
+        <div class="container footer-card">
+          <p class="small">© 2026 StyleCam. All rights reserved.</p>
+          <div class="footer-links">
+            <a
+              href="https://sites.google.com/view/reco-app-privacy-policy/%E3%83%9B%E3%83%BC%E3%83%A0"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Privacy Policy</a
+            >
+            <a href="https://forms.gle/i6nbR2GQYp26hCJD7" target="_blank" rel="noopener noreferrer"
+              >Support</a
+            >
+            <a
+              href="https://apps.apple.com/jp/app/stylecam/id6774717129"
+              target="_blank"
+              rel="noopener noreferrer"
+              >App Store</a
+            >
+          </div>
         </div>
-
-        <p class="note">
-          After publishing this repository with GitHub Pages, set the marketing URL in App Store
-          Connect to this site root URL.
-        </p>
-      </section>
-    </main>
+      </footer>
+    </div>
   </body>
 </html>
