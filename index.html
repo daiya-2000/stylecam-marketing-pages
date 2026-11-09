@@ -6,12 +6,12 @@
     <title>StyleCam | 好きな写真と同じ構図で、撮れる。</title>
     <meta
       name="description"
-      content="StyleCamは参考画像を重ねて撮れるiPhone専用カメラアプリ。SNSで見た理想の写真を、誰でも簡単に再現できます。"
+      content="StyleCamは参考画像を重ねて撮れるiPhone専用カメラアプリ。SNSで見た理想の写真を誰でも簡単に再現。音量ボタン・イヤホンリモコンでのシャッターにも対応。"
     />
     <meta property="og:title" content="StyleCam | 好きな写真と同じ構図で、撮れる。" />
     <meta
       property="og:description"
-      content="参考画像を重ねるだけで、理想の構図に近づける。StyleCamはiPhone専用・無料です。"
+      content="参考画像を重ねるだけで、理想の構図に近づける。音量ボタン・イヤホンでシャッターも切れる。StyleCamはiPhone専用・無料です。"
     />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="img/StyleCam_icon.png" />
@@ -310,6 +310,10 @@
         gap: 14px;
       }
 
+      .feature-card:nth-child(5):last-child {
+        grid-column: span 2;
+      }
+
       .feature-card {
         background: #fff;
         border: 1.5px solid var(--line);
@@ -506,8 +510,12 @@
         .howto-app-visual { max-width: 100%; }
 
         .features-grid {
-          grid-template-columns: repeat(4, 1fr);
+          grid-template-columns: repeat(5, 1fr);
           gap: 20px;
+        }
+
+        .feature-card:nth-child(5):last-child {
+          grid-column: span 1;
         }
 
         .feature-card h3 { font-size: 15px; }
@@ -632,7 +640,7 @@
                   <div class="step-num">3</div>
                   <div>
                     <h3>シャッターを押して完成</h3>
-                    <p>ピタッと構図が決まったらシャッターを押すだけ。理想の1枚のできあがり！</p>
+                    <p>ピタッと構図が決まったらシャッターを押すだけ。画面ボタンのほか、音量ボタンやイヤホンリモコンでも撮影できるので構図をキープしたまま撮れます。</p>
                   </div>
                 </div>
               </div>
@@ -699,6 +707,19 @@
                 </div>
                 <h3>充実のカメラ操作</h3>
                 <p>ピンチでズーム・フラッシュ切替・タイマー撮影（3秒・5秒）・前面カメラ切替に対応。</p>
+              </div>
+
+              <div class="feature-card">
+                <div class="feature-icon">
+                  <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="10" y="2" width="8" height="18" rx="4" stroke="#f4789a" stroke-width="2"/>
+                    <path d="M6 12 C6 18 22 18 22 12" stroke="#c77dbc" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+                    <line x1="14" y1="20" x2="14" y2="26" stroke="#f4789a" stroke-width="2" stroke-linecap="round"/>
+                    <line x1="10" y1="26" x2="18" y2="26" stroke="#f4789a" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <h3>音量ボタン<br />シャッター<br /><span style="font-weight:400;font-size:11px;color:var(--soft);">v1.5.0</span></h3>
+                <p>本体の音量ボタン（上/下）でシャッターを切れます。有線・BTイヤホンのリモコンにも対応。構図をキープしたまま撮影できます。</p>
               </div>
 
             </div>
