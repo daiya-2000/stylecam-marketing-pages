@@ -1,0 +1,1069 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <title>StyleCam App Store Screenshots</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap");
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #111;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+      padding: 32px;
+      font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
+    }
+
+    /* ─── EXPORT INSTRUCTIONS ─── */
+    .instructions {
+      color: #aaa;
+      font-size: 13px;
+      line-height: 1.8;
+      background: #1e1e1e;
+      border: 1px solid #333;
+      border-radius: 12px;
+      padding: 16px 20px;
+      max-width: 500px;
+      width: 100%;
+    }
+    .instructions strong { color: #f4789a; }
+    .instructions code { background: #333; padding: 1px 6px; border-radius: 4px; font-size: 12px; }
+
+    /* ─── SCREENSHOT FRAME ─── */
+    .label {
+      color: #666;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      align-self: flex-start;
+      max-width: 430px;
+      width: 100%;
+    }
+
+    .screenshot {
+      width: 430px;
+      height: 932px;
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    /* ─── PHONE FRAME ─── */
+    .phone {
+      position: absolute;
+      width: 240px;
+      height: 490px;
+      background: #111;
+      border-radius: 46px;
+      left: 50%;
+      transform: translateX(-50%);
+      box-shadow:
+        0 0 0 2px #3a3a3a,
+        0 0 0 3px #222,
+        0 60px 120px rgba(0,0,0,0.6),
+        inset 0 0 0 1px #444;
+    }
+
+    .phone-screen {
+      position: absolute;
+      top: 11px; left: 11px; right: 11px; bottom: 11px;
+      border-radius: 36px;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .dynamic-island {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 68px;
+      height: 11px;
+      background: #111;
+      border-radius: 999px;
+      z-index: 10;
+    }
+
+    /* Side buttons */
+    .phone::before {
+      content: '';
+      position: absolute;
+      right: -4px;
+      top: 100px;
+      width: 4px;
+      height: 60px;
+      background: #2a2a2a;
+      border-radius: 0 3px 3px 0;
+      box-shadow: 0 80px 0 #2a2a2a;
+    }
+    .phone::after {
+      content: '';
+      position: absolute;
+      left: -4px;
+      top: 90px;
+      width: 4px;
+      height: 36px;
+      background: #2a2a2a;
+      border-radius: 3px 0 0 3px;
+      box-shadow: 0 50px 0 #2a2a2a, 0 100px 0 #2a2a2a;
+    }
+
+    /* ─── CAMERA VIEWFINDER MOCK ─── */
+    .viewfinder {
+      width: 100%;
+      height: 100%;
+      background: #111;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .vf-gradient {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(160deg, #1a0d1a 0%, #0d1a1a 60%, #1a0d10 100%);
+    }
+
+    .vf-grid {
+      position: absolute;
+      inset: 0;
+    }
+    .vf-grid::before, .vf-grid::after {
+      content: '';
+      position: absolute;
+      background: rgba(255,255,255,0.15);
+    }
+    .vf-grid::before {
+      left: 33.3%; top: 0; width: 1px; height: 100%;
+      box-shadow: 66.4px 0 0 rgba(255,255,255,0.15);
+    }
+    .vf-grid::after {
+      top: 33.3%; left: 0; height: 1px; width: 100%;
+      box-shadow: 0 66.4px 0 rgba(255,255,255,0.15);
+    }
+
+    .overlay-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.45;
+    }
+
+    .vf-controls {
+      position: absolute;
+      bottom: 0;
+      left: 0; right: 0;
+      padding: 8px 10px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);
+    }
+
+    .vf-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      border: 1.5px solid rgba(255,255,255,0.5);
+      background: rgba(255,255,255,0.1);
+    }
+
+    .vf-shutter {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 2.5px solid #fff;
+      background: rgba(255,255,255,0.9);
+      flex-shrink: 0;
+    }
+
+    .vf-opacity-bar {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 3px;
+      height: 100px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 999px;
+    }
+    .vf-opacity-bar::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 60%;
+      background: rgba(244,120,154,0.8);
+      border-radius: 999px;
+    }
+
+    /* ─── SCREENSHOT 1: HERO ─── */
+    .s1 { background: #fdf8f5; }
+
+    .s1 .orb {
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(60px);
+      pointer-events: none;
+    }
+    .s1 .orb-a {
+      width: 350px; height: 350px;
+      top: -100px; left: -120px;
+      background: radial-gradient(circle, #f9c4d4 0%, #e8b8ea 60%, transparent 100%);
+      opacity: 0.6;
+    }
+    .s1 .orb-b {
+      width: 320px; height: 320px;
+      right: -120px; bottom: 100px;
+      background: radial-gradient(circle, #f9c4d4 0%, #d8b8ec 60%, transparent 100%);
+      opacity: 0.5;
+    }
+
+    .s1 .phone { top: 320px; }
+
+    .s1 .text-block {
+      position: absolute;
+      top: 72px;
+      left: 0; right: 0;
+      padding: 0 36px;
+      text-align: center;
+    }
+
+    .s1 .eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      font-weight: 700;
+      color: #f4789a;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .s1 .headline {
+      font-family: "M PLUS Rounded 1c", sans-serif;
+      font-size: 40px;
+      font-weight: 800;
+      line-height: 1.15;
+      color: #2d1f2e;
+      margin-bottom: 14px;
+    }
+
+    .s1 .headline .grad {
+      background: linear-gradient(90deg, #f4789a, #c77dbc);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .s1 .sub {
+      font-size: 15px;
+      color: #9a7fa0;
+      line-height: 1.65;
+    }
+
+    .s1 .badge {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 18px;
+      border-radius: 999px;
+      border: 1.5px solid #f0dfe8;
+      background: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      color: #9a7fa0;
+      white-space: nowrap;
+    }
+
+    /* ─── SCREENSHOT 2: VOLUME BUTTON ─── */
+    .s2 {
+      background: linear-gradient(145deg, #3d1a3d 0%, #1f0d2e 40%, #0d1a2e 100%);
+    }
+
+    .s2 .phone { top: 300px; }
+
+    .s2 .text-block {
+      position: absolute;
+      top: 64px;
+      left: 0; right: 0;
+      padding: 0 36px;
+      text-align: center;
+    }
+
+    .s2 .eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      font-weight: 700;
+      color: #f9a8c0;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .s2 .new-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #f4789a, #c77dbc);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      padding: 3px 10px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+
+    .s2 .headline {
+      font-family: "M PLUS Rounded 1c", sans-serif;
+      font-size: 38px;
+      font-weight: 800;
+      line-height: 1.2;
+      color: #fff;
+      margin-bottom: 14px;
+    }
+
+    .s2 .headline .accent { color: #f9a8c0; }
+
+    .s2 .sub {
+      font-size: 14px;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.7;
+    }
+
+    .s2 .feature-pills {
+      position: absolute;
+      bottom: 44px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .s2 .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.85);
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+      backdrop-filter: blur(4px);
+    }
+
+    .pill-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #f4789a;
+      flex-shrink: 0;
+    }
+
+    /* volume button illustration inside phone */
+    .vol-indicator {
+      position: absolute;
+      left: -52px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .vol-btn-visual {
+      width: 20px;
+      height: 36px;
+      background: linear-gradient(135deg, #f4789a, #c77dbc);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: #fff;
+      font-weight: 800;
+      box-shadow: 0 4px 12px rgba(244,120,154,0.5);
+    }
+
+    .vol-arrow {
+      width: 0; height: 0;
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-bottom: 10px solid rgba(244,120,154,0.5);
+    }
+
+    /* ─── SCREENSHOT 3: GRID ─── */
+    .s3 { background: #fdf8f5; }
+
+    .s3 .orb {
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(80px);
+      pointer-events: none;
+    }
+    .s3 .orb-a {
+      width: 300px; height: 300px;
+      top: -60px; right: -80px;
+      background: radial-gradient(circle, #dce8ff 0%, #e8d8f5 60%, transparent 100%);
+      opacity: 0.7;
+    }
+
+    .s3 .phone { top: 300px; }
+
+    .s3 .text-block {
+      position: absolute;
+      top: 64px;
+      left: 0; right: 0;
+      padding: 0 36px;
+      text-align: center;
+    }
+
+    .s3 .eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      font-weight: 700;
+      color: #f4789a;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .s3 .headline {
+      font-family: "M PLUS Rounded 1c", sans-serif;
+      font-size: 38px;
+      font-weight: 800;
+      line-height: 1.2;
+      color: #2d1f2e;
+      margin-bottom: 14px;
+    }
+
+    .s3 .headline .grad {
+      background: linear-gradient(90deg, #f4789a, #c77dbc);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .s3 .sub {
+      font-size: 14px;
+      color: #9a7fa0;
+      line-height: 1.7;
+    }
+
+    .s3 .checklist {
+      position: absolute;
+      bottom: 44px;
+      left: 36px; right: 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #fff;
+      border: 1.5px solid #f0dfe8;
+      border-radius: 14px;
+      padding: 10px 16px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #2d1f2e;
+    }
+
+    .check-icon {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #f4789a, #c77dbc);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+
+    /* ─── SCREENSHOT 4: BEAUTY FILTER ─── */
+    .s4 {
+      background: linear-gradient(155deg, #fff0f5 0%, #fdf8f5 50%, #f5f0ff 100%);
+    }
+
+    .s4 .phone { top: 300px; }
+
+    .s4 .text-block {
+      position: absolute;
+      top: 64px;
+      left: 0; right: 0;
+      padding: 0 36px;
+      text-align: center;
+    }
+
+    .s4 .eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      font-weight: 700;
+      color: #f4789a;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .s4 .headline {
+      font-family: "M PLUS Rounded 1c", sans-serif;
+      font-size: 40px;
+      font-weight: 800;
+      line-height: 1.2;
+      color: #2d1f2e;
+      margin-bottom: 14px;
+    }
+
+    .s4 .headline .grad {
+      background: linear-gradient(90deg, #f4789a, #c77dbc);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .s4 .sub {
+      font-size: 14px;
+      color: #9a7fa0;
+      line-height: 1.7;
+    }
+
+    /* Beauty portrait mock in phone */
+    .beauty-portrait {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(160deg, #2a1520 0%, #1a1030 60%, #201525 100%);
+      position: relative;
+    }
+
+    .portrait-shape {
+      position: absolute;
+      bottom: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90px;
+      height: 115px;
+      border-radius: 50% 50% 45% 45% / 55% 55% 45% 45%;
+      background: linear-gradient(160deg, #d4a0a8 0%, #c89090 50%, #b87878 100%);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+    }
+
+    .portrait-glow {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 110px;
+      height: 60px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(244,120,154,0.2) 0%, transparent 70%);
+      filter: blur(10px);
+    }
+
+    .beauty-slider-container {
+      position: absolute;
+      bottom: 24px;
+      left: 12px; right: 12px;
+    }
+
+    .beauty-slider-label {
+      font-size: 7px;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 4px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .beauty-slider-track {
+      height: 3px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 999px;
+      position: relative;
+    }
+
+    .beauty-slider-fill {
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 65%;
+      background: linear-gradient(90deg, #f4789a, #c77dbc);
+      border-radius: 999px;
+    }
+
+    .beauty-slider-thumb {
+      position: absolute;
+      top: 50%;
+      left: 65%;
+      transform: translate(-50%, -50%);
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
+
+    .beauty-stars {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 3px;
+    }
+
+    .beauty-star {
+      width: 10px;
+      height: 10px;
+      background: rgba(244,120,154,0.7);
+      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    }
+
+    .s4 .slider-visual {
+      position: absolute;
+      bottom: 44px;
+      left: 36px; right: 36px;
+      background: #fff;
+      border: 1.5px solid #f0dfe8;
+      border-radius: 18px;
+      padding: 14px 18px;
+    }
+
+    .slider-label-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #2d1f2e;
+    }
+
+    .slider-value {
+      font-size: 11px;
+      font-weight: 700;
+      color: #f4789a;
+    }
+
+    .slider-track {
+      height: 6px;
+      background: #f0dfe8;
+      border-radius: 999px;
+      position: relative;
+    }
+
+    .slider-fill {
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 65%;
+      background: linear-gradient(90deg, #f4789a, #c77dbc);
+      border-radius: 999px;
+    }
+
+    .slider-thumb {
+      position: absolute;
+      top: 50%;
+      left: 65%;
+      transform: translate(-50%, -50%);
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #fff;
+      border: 2px solid #f4789a;
+      box-shadow: 0 2px 8px rgba(244,120,154,0.3);
+    }
+
+    /* ─── SCREENSHOT 5: SCENES / CTA ─── */
+    .s5 {
+      background: linear-gradient(155deg, #2d0e28 0%, #1a0820 50%, #200a2a 100%);
+    }
+
+    .s5 .text-block {
+      position: absolute;
+      top: 64px;
+      left: 0; right: 0;
+      padding: 0 36px;
+      text-align: center;
+    }
+
+    .s5 .eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      font-weight: 700;
+      color: #f9a8c0;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .s5 .headline {
+      font-family: "M PLUS Rounded 1c", sans-serif;
+      font-size: 36px;
+      font-weight: 800;
+      line-height: 1.25;
+      color: #fff;
+      margin-bottom: 14px;
+    }
+
+    .s5 .headline .grad {
+      background: linear-gradient(90deg, #f4789a, #c77dbc);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .s5 .sub {
+      font-size: 14px;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.7;
+    }
+
+    .scene-grid {
+      position: absolute;
+      top: 310px;
+      left: 20px; right: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+    }
+
+    .scene-thumb {
+      border-radius: 16px;
+      overflow: hidden;
+      aspect-ratio: 3 / 4;
+      position: relative;
+    }
+
+    .scene-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .scene-chip {
+      position: absolute;
+      bottom: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(4px);
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 700;
+      color: #2d1f2e;
+      white-space: nowrap;
+    }
+
+    .s5 .cta-row {
+      position: absolute;
+      bottom: 44px;
+      left: 36px; right: 36px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: linear-gradient(135deg, #f4789a, #c77dbc);
+      border-radius: 20px;
+      padding: 16px 20px;
+      box-shadow: 0 12px 40px rgba(244,120,154,0.4);
+    }
+
+    .s5 .cta-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: rgba(255,255,255,0.15);
+    }
+
+    .s5 .cta-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .s5 .cta-text {
+      flex: 1;
+    }
+
+    .s5 .cta-text-main {
+      font-size: 15px;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.3;
+      font-family: "M PLUS Rounded 1c", sans-serif;
+    }
+
+    .s5 .cta-text-sub {
+      font-size: 11px;
+      color: rgba(255,255,255,0.75);
+      margin-top: 2px;
+    }
+
+    .s5 .cta-arrow {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="instructions">
+  <strong>書き出し方法（Chrome）</strong><br>
+  1. Chrome で このページを開く<br>
+  2. DevTools を開く（<code>Cmd+Option+I</code>）<br>
+  3. 上部のデバイスアイコン（<code>Cmd+Shift+M</code>）をクリックしてデバイスモードに切替<br>
+  4. 解像度を <strong>430 × 932</strong> に設定 → DPR を <strong>3</strong> に設定<br>
+  5. ⋮ メニュー → <strong>「Capture screenshot」</strong> または <strong>「Capture full size screenshot」</strong><br>
+  &nbsp;&nbsp;&nbsp;→ 1290×2796px の PNG が書き出されます<br>
+  6. 各スクリーンショットを個別に切り取る場合は、画面をスクロールして各セクションを表示した状態でキャプチャしてください。
+</div>
+
+<!-- ══════════════════════════════════
+     SCREENSHOT 1: HERO — Overlay
+══════════════════════════════════ -->
+<p class="label">01 — Hero / Overlay（1枚目）</p>
+<div class="screenshot s1">
+  <span class="orb orb-a"></span>
+  <span class="orb orb-b"></span>
+
+  <div class="text-block">
+    <p class="eyebrow">iPhone Camera App</p>
+    <h1 class="headline">
+      <span class="grad">好きな写真と</span><br>
+      <span class="grad">同じ構図で、</span><br>撮れる。
+    </h1>
+    <p class="sub">
+      参考画像をカメラに半透明で重ねるだけ。<br>
+      構図・角度・距離感をぴったり合わせられる。
+    </p>
+  </div>
+
+  <div class="phone" style="top: 340px;">
+    <div class="phone-screen">
+      <div class="dynamic-island"></div>
+      <img src="../img/アプリ参考画像.png" alt="" style="width:100%;height:100%;object-fit:cover;display:block;">
+    </div>
+  </div>
+
+  <span class="badge">iOS ONLY · 無料ダウンロード</span>
+</div>
+
+<!-- ══════════════════════════════════
+     SCREENSHOT 2: VOLUME BUTTON SHUTTER
+══════════════════════════════════ -->
+<p class="label">02 — 音量ボタンシャッター（2枚目）</p>
+<div class="screenshot s2">
+  <div class="text-block">
+    <div class="new-badge">New in v1.5</div>
+    <h2 class="headline">
+      <span class="accent">音量ボタン</span>で<br>
+      構図を崩さず<br>シャッターを切る
+    </h2>
+    <p class="sub">
+      本体ボタン上下どちらでも撮影可能。<br>
+      有線・Bluetoothイヤホンのリモコンにも対応。
+    </p>
+  </div>
+
+  <div class="phone" style="top: 320px;">
+    <div class="phone-screen">
+      <div class="dynamic-island"></div>
+      <div class="viewfinder">
+        <div class="vf-gradient"></div>
+        <div class="vf-opacity-bar"></div>
+        <div class="vf-controls">
+          <div class="vf-btn" style="width:26px;height:26px;"></div>
+          <div class="vf-shutter"></div>
+          <div class="vf-btn" style="width:26px;height:26px;border-radius:6px;"></div>
+        </div>
+      </div>
+    </div>
+    <!-- volume button indicator floating to the left -->
+    <div class="vol-indicator">
+      <div class="vol-arrow" style="border-bottom-color: rgba(244,120,154,0.7);"></div>
+      <div class="vol-btn-visual">+</div>
+      <div class="vol-btn-visual" style="margin-top:2px;">−</div>
+    </div>
+  </div>
+
+  <div class="feature-pills">
+    <div class="pill"><span class="pill-dot"></span>本体の音量ボタン（上/下）</div>
+    <div class="pill"><span class="pill-dot"></span>有線イヤホン リモコン対応</div>
+    <div class="pill"><span class="pill-dot"></span>Bluetooth イヤホン対応</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     SCREENSHOT 3: GRID
+══════════════════════════════════ -->
+<p class="label">03 — グリッド・構図合わせ（3枚目）</p>
+<div class="screenshot s3">
+  <span class="orb orb-a"></span>
+
+  <div class="text-block">
+    <p class="eyebrow">Composition Grid</p>
+    <h2 class="headline">
+      グリッドで<br>
+      <span class="grad">構図をぴったり</span><br>合わせる
+    </h2>
+    <p class="sub">
+      3分割グリッドをON/OFFで切り替え。<br>
+      参考画像と重ねてプロ級の構図に。
+    </p>
+  </div>
+
+  <div class="phone" style="top: 320px;">
+    <div class="phone-screen">
+      <div class="dynamic-island"></div>
+      <div class="viewfinder">
+        <div class="vf-gradient"></div>
+        <div class="vf-grid"></div>
+        <!-- simulated overlay reference image placeholder -->
+        <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(244,120,154,0.15),rgba(199,125,188,0.15));"></div>
+        <div class="vf-opacity-bar"></div>
+        <div class="vf-controls">
+          <div class="vf-btn"></div>
+          <div class="vf-shutter"></div>
+          <div class="vf-btn" style="border-radius:6px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="checklist">
+    <div class="check-item">
+      <div class="check-icon">✓</div>
+      3分割グリッド ON / OFF
+    </div>
+    <div class="check-item">
+      <div class="check-icon">✓</div>
+      透明度・サイズ・位置を自在に調整
+    </div>
+    <div class="check-item">
+      <div class="check-icon">✓</div>
+      カメラ画面にリアルタイム表示
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     SCREENSHOT 4: BEAUTY FILTER
+══════════════════════════════════ -->
+<p class="label">04 — 美肌フィルター（4枚目）</p>
+<div class="screenshot s4">
+
+  <div class="text-block">
+    <p class="eyebrow">Beauty Filter</p>
+    <h2 class="headline">
+      <span class="grad">リアルタイム</span><br>
+      美肌フィルター
+    </h2>
+    <p class="sub">
+      撮影しながらいつでもきれいに。<br>
+      強度はスライダーで自分好みに調整。
+    </p>
+  </div>
+
+  <div class="phone" style="top: 320px;">
+    <div class="phone-screen">
+      <div class="dynamic-island"></div>
+      <div class="beauty-portrait">
+        <div class="beauty-stars">
+          <div class="beauty-star"></div>
+          <div class="beauty-star"></div>
+          <div class="beauty-star"></div>
+        </div>
+        <div class="portrait-glow"></div>
+        <div class="portrait-shape"></div>
+        <div class="beauty-slider-container">
+          <div class="beauty-slider-label">
+            <span>美肌強度</span>
+            <span>65%</span>
+          </div>
+          <div class="beauty-slider-track">
+            <div class="beauty-slider-fill"></div>
+            <div class="beauty-slider-thumb"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slider-visual">
+    <div class="slider-label-row">
+      <span>美肌フィルター強度</span>
+      <span class="slider-value">65%</span>
+    </div>
+    <div class="slider-track">
+      <div class="slider-fill"></div>
+      <div class="slider-thumb"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     SCREENSHOT 5: SCENES / CTA
+══════════════════════════════════ -->
+<p class="label">05 — シーン / CTA（5枚目）</p>
+<div class="screenshot s5">
+
+  <div class="text-block">
+    <p class="eyebrow">Any Scene</p>
+    <h2 class="headline">
+      旅行・カフェ・<br>カップル写真——<br>
+      <span class="grad">なんでも使える</span>
+    </h2>
+    <p class="sub">
+      SNSで見たあの1枚を、あなたが撮れる。
+    </p>
+  </div>
+
+  <div class="scene-grid">
+    <div class="scene-thumb">
+      <img src="../img/旅行1.png" alt="旅行">
+      <span class="scene-chip">旅行</span>
+    </div>
+    <div class="scene-thumb">
+      <img src="../img/旅行2.png" alt="カフェ">
+      <span class="scene-chip">カフェ</span>
+    </div>
+    <div class="scene-thumb">
+      <img src="../img/旅行3.png" alt="カップル">
+      <span class="scene-chip">カップル</span>
+    </div>
+  </div>
+
+  <div class="cta-row">
+    <div class="cta-icon">
+      <img src="../img/StyleCam_icon.png" alt="StyleCam">
+    </div>
+    <div class="cta-text">
+      <div class="cta-text-main">StyleCam — 無料ではじめる</div>
+      <div class="cta-text-sub">App Store からダウンロード</div>
+    </div>
+    <div class="cta-arrow">›</div>
+  </div>
+</div>
+
+</body>
+</html>
